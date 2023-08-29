@@ -13,7 +13,7 @@ class User(Base):
     is_admin = Column(Boolean, default=False)
     hashed_password = Column(String, nullable=False)
 
-    projects = relationship("Project", back_populates="user")
+    projects = relationship("Project", back_populates="created_by")
     todos = relationship("ToDo", back_populates="created_by")
 
     def __repr__(self):

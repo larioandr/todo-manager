@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import Depends, Header, HTTPException, status
 
 from . import schemas
-from . import crud
+from . import database
 
 
 async def get_token(x_token: Annotated[str, Header()]) -> str:
@@ -25,3 +25,11 @@ async def get_current_user(token: Annotated[str, Depends(get_token)]):
 
 
 CurrentUserDep = Annotated[schemas.User, Depends(get_current_user)]
+
+
+def get_db():
+    db = database.SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

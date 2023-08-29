@@ -32,12 +32,13 @@ def delete_user(db: Session, user_id: int) -> int:
     return 0
 
 
-def create_user(db: Session, data: schemas.UserCreate) -> models.User:
+def create_user(db: Session, data: schemas.UserCreate,
+                hashed_password: str) -> models.User:
     db_user = models.User(
         first_name=data.first_name,
         last_name=data.last_name,
         email=data.email,
-        hashed_password=data.hashed_password
+        hashed_password=hashed_password
     )
     db.add(db_user)
     db.commit()
